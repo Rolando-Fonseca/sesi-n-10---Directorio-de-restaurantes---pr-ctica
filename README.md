@@ -10,7 +10,7 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# Foodzinder Web v1.1.0
+# Foodzinder Web v1.1.1
 # or
 bun dev
 ```

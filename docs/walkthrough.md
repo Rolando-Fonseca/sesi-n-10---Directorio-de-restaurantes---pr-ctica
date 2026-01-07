@@ -61,8 +61,8 @@ Route (app)
 
 ### Capturas de Estructura
 
-- [Layout Público](<file:///Users/danielmc/Desktop/CodeIA/GrupoA/foodzinder-web/src/app/(public)/layout.tsx>)
-- [Layout Dashboard](<file:///Users/danielmc/Desktop/CodeIA/GrupoA/foodzinder-web/src/app/(dashboard)/layout.tsx>)
-- [Configuración Global](file:///Users/danielmc/Desktop/CodeIA/GrupoA/foodzinder-web/src/app/globals.css)
+- [Layout Público](<src/app/(public)/layout.tsx>)
+- [Layout Dashboard](<src/app/(dashboard)/layout.tsx>)
+- [Configuración Global](src/app/globals.css)
 
 ¡El entorno está listo para que el equipo comience con el Sprint 1!
