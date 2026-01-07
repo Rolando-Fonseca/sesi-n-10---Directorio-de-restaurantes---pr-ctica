@@ -22,10 +22,10 @@ Las tareas están alineadas con las fases del [Roadmap](./roadmap.md) y la [Plan
 
 ### 🎨 Dani (Frontend & UI)
 
-- [ ] **Setup Frontend**: Inicializar proyecto Next.js 16 con Bun.
-- [ ] **Estilos**: Configurar Tailwind CSS v4 (o v3) y `shadcn/ui` con la paleta de colores del branding.
-- [ ] **Linting**: Establecer reglas de ESLint y Prettier para consistencia de código.
-- [ ] **Layouts**: Implementar el Layout Público (Landing) y Layout del Dashboard (Sidebar/Header).
+- [x] **Setup Frontend**: Inicializar proyecto Next.js 16 con Bun.
+- [x] **Estilos**: Configurar Tailwind CSS v4 (o v3) y `shadcn/ui` con la paleta de colores del branding.
+- [x] **Linting**: Establecer reglas de ESLint y Prettier para consistencia de código.
+- [x] **Layouts**: Implementar el Layout Público (Landing) y Layout del Dashboard (Sidebar/Header).
 
 ### 🛠️ Nemesio (DevOps & Docs)
 

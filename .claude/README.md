@@ -23,55 +23,73 @@ Esta carpeta contiene la configuración y definición de todos los agentes espec
 ## 🎯 Agentes Disponibles
 
 ### 1. The Architect 🏛️
+
 **Meta-Agent / Orquestador**
+
 - Supervisión global del proyecto
 - Toma de decisiones arquitectónicas
 - Orquestación de sub-agentes
 
 ### 2. CoreAPI 🔧
+
 **Backend & API Specialist**
+
 - Implementación de Server Actions
 - Integraciones (Stripe, Clerk)
 - Validación de datos
 
 ### 3. PixelPerfect 🎨
+
 **Frontend & UX/UI Specialist**
+
 - Componentes React reutilizables
 - Diseño responsive
 - Optimización de Core Web Vitals
 
 ### 4. SchemaKeeper 🗄️
+
 **Database & Integrity Specialist**
+
 - Gestión del schema Prisma
 - Migraciones PostgreSQL
 - Optimización de índices
 
 ### 5. Sentinel 🔐
+
 **Security & Compliance Specialist**
+
 - Auditoría de seguridad
 - Cumplimiento GDPR/Fiscal
 - Sanitización de inputs
 
 ### 6. GrowthBot 📈
+
 **SEO & Analytics Specialist**
+
 - Metadatos dinámicos
 - Datos estructurados (JSON-LD)
 - Google Analytics
 
 ### 7. BugHunter 🐛
+
 **Testing & QA Specialist**
+
 - Tests unitarios y E2E
 - Prevención de regresiones
 - Aseguramiento de calidad
 
 ### 8. Scribe 📝
+
 **Documentation Specialist**
+
 - Mantenimiento de docs
 - Diagramas Mermaid
 - Base de conocimiento
 
 ### 9. OpsMaster ⚙️
+
 **Deployment & DevOps Specialist**
+
 - CI/CD y GitHub Actions
 - Gestión de infraestructura
 - Monitoreo de servidores
@@ -117,4 +135,3 @@ Todos los agentes respetan estos principios:
 - [Planificación](../docs/planificacion.md)
 - [Arquitectura](../docs/arquitectura.md)
 - [Modelado de Datos](../docs/modelado-de-datos.md)
-
