@@ -5,6 +5,7 @@ Este archivo centraliza la información de todos los agentes especializados del 
 ## Estructura de Agentes
 
 ### 1. **The Architect** (Meta-Agent / Orquestador)
+
 - **Role**: Supervisión global y orquestación
 - **Responsabilidades**:
   - Interpretar requerimientos de negocio
@@ -14,6 +15,7 @@ Este archivo centraliza la información de todos los agentes especializados del 
 - **Archivo**: `agents/architect.md`
 
 ### 2. **CoreAPI** (Backend & API Specialist)
+
 - **Role**: Backend y lógica de negocio
 - **Responsabilidades**:
   - Implementar Server Actions seguros
@@ -23,6 +25,7 @@ Este archivo centraliza la información de todos los agentes especializados del 
 - **Archivo**: `agents/core-api.md`
 
 ### 3. **PixelPerfect** (Frontend & UX/UI Specialist)
+
 - **Role**: Frontend, diseño visual e interactividad
 - **Responsabilidades**:
   - Crear componentes reutilizables (shadcn/ui)
@@ -32,6 +35,7 @@ Este archivo centraliza la información de todos los agentes especializados del 
 - **Archivo**: `agents/pixel-perfect.md`
 
 ### 4. **SchemaKeeper** (Database & Integrity Specialist)
+
 - **Role**: Base de datos y esquema
 - **Responsabilidades**:
   - Diseñar y mantener schema.prisma
@@ -41,6 +45,7 @@ Este archivo centraliza la información de todos los agentes especializados del 
 - **Archivo**: `agents/schema-keeper.md`
 
 ### 5. **Sentinel** (Security & Compliance Specialist)
+
 - **Role**: Seguridad y cumplimiento
 - **Responsabilidades**:
   - Validar políticas RLS
@@ -50,6 +55,7 @@ Este archivo centraliza la información de todos los agentes especializados del 
 - **Archivo**: `agents/sentinel.md`
 
 ### 6. **GrowthBot** (SEO & Analytics Specialist)
+
 - **Role**: Visibilidad y posicionamiento
 - **Responsabilidades**:
   - Generar metadatos dinámicos
@@ -59,6 +65,7 @@ Este archivo centraliza la información de todos los agentes especializados del 
 - **Archivo**: `agents/growth-bot.md`
 
 ### 7. **BugHunter** (Testing & QA Specialist)
+
 - **Role**: Testing y aseguramiento de calidad
 - **Responsabilidades**:
   - Escribir tests unitarios
@@ -68,6 +75,7 @@ Este archivo centraliza la información de todos los agentes especializados del 
 - **Archivo**: `agents/bug-hunter.md`
 
 ### 8. **Scribe** (Documentation Specialist)
+
 - **Role**: Documentación y base de conocimiento
 - **Responsabilidades**:
   - Mantener README, CHANGELOG y docs/
@@ -76,6 +84,7 @@ Este archivo centraliza la información de todos los agentes especializados del 
 - **Archivo**: `agents/scribe.md`
 
 ### 9. **OpsMaster** (Deployment & DevOps Specialist)
+
 - **Role**: CI/CD e infraestructura
 - **Responsabilidades**:
   - Configurar pipelines GitHub Actions
@@ -117,4 +126,3 @@ Todos los agentes deben respetar estos principios:
 - **Payments**: Stripe
 - **Deployment**: Vercel / VPS con Easypanel
 - **Testing**: Jest, Playwright
-
