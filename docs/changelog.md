@@ -30,6 +30,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 - Documentos de planificación: `docs/changelog.md`, `docs/roadmap.md`, `docs/idea-board.md`.
 - Workflow de release: `.agent/workflows/proceso_release.md`.
 - Verificación de conexión a Supabase e integración con MCP.
+- Cliente de subida de imágenes a Bunny.net (`src/lib/bunny.ts`) y script de verificación.
 
 ### Cambiado
 
