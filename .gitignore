@@ -45,3 +45,17 @@ prisma/migrations/
 
 # bun
 bun.lockb
+
+# salida accidental de `tsc` (tsconfig usa noEmit; Next compila por su cuenta)
+src/**/*.js
+src/**/*.js.map
+src/**/*.d.ts
+src/**/*.d.ts.map
+prisma/**/*.js
+prisma/**/*.js.map
+prisma/**/*.d.ts
+prisma/**/*.d.ts.map
+next.config.js
+next.config.js.map
+next.config.d.ts
+next.config.d.ts.map
