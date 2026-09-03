@@ -1,37 +1,268 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ------------------------------------------------------------------
+   Tokens de marca Foodzinder
+   - brand: rosa de identidad (#f67499). Solo para fondos, tintes y detalles:
+     con texto blanco da 2,7:1 y no pasa WCAG AA.
+   - primary: frambuesa (#c9305f), 5,2:1 con blanco. Botones, enlaces, foco.
+   - accent: ámbar (#FFC107) siempre con texto oscuro (7,8:1).
+   ------------------------------------------------------------------ */
+:root {
+  --brand: #f67499;
+  --brand-soft: #fde6ee;
+  --brand-tint: #fff5f8;
+  --cream: #fbf6f1;
+
+  --background: #ffffff;
+  --foreground: #2d3436;
+  --card: #ffffff;
+  --card-foreground: #2d3436;
+  --popover: #ffffff;
+  --popover-foreground: #2d3436;
+  --primary: #c9305f;
+  --primary-foreground: #ffffff;
+  --secondary: #2d3436;
+  --secondary-foreground: #ffffff;
+  --muted: #f3f1ef;
+  --muted-foreground: #5b6470;
+  --accent: #ffc107;
+  --accent-foreground: #2d3436;
+  --destructive: #c62828;
+  --destructive-foreground: #ffffff;
+  --border: #e6e2de;
+  --input: #d9d4cf;
+  --ring: #c9305f;
+  --chart-1: #c9305f;
+  --chart-2: #f67499;
+  --chart-3: #ffc107;
+  --chart-4: #2d3436;
+  --chart-5: #5b6470;
+  --radius: 0.75rem;
+  --sidebar: #fbf6f1;
+  --sidebar-foreground: #2d3436;
+  --sidebar-primary: #c9305f;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #fde6ee;
+  --sidebar-accent-foreground: #2d3436;
+  --sidebar-border: #e6e2de;
+  --sidebar-ring: #c9305f;
+
+  /* Movimiento: una sola curva de salida, nunca ease-in en UI */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --duration-fast: 140ms;
+  --duration-ui: 220ms;
+  --duration-reveal: 600ms;
+}
+
+.dark {
+  --background: #1b1d1f;
+  --foreground: #f5f1ee;
+  --card: #232628;
+  --card-foreground: #f5f1ee;
+  --popover: #232628;
+  --popover-foreground: #f5f1ee;
+  --primary: #f67499;
+  --primary-foreground: #1b1d1f;
+  --secondary: #f5f1ee;
+  --secondary-foreground: #1b1d1f;
+  --muted: #2b2f32;
+  --muted-foreground: #b3b9c0;
+  --accent: #ffc107;
+  --accent-foreground: #1b1d1f;
+  --destructive: #ef5350;
+  --destructive-foreground: #1b1d1f;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #f67499;
+  --brand-soft: #3a2630;
+  --brand-tint: #2a2024;
+  --cream: #232628;
+  --sidebar: #232628;
+  --sidebar-foreground: #f5f1ee;
+  --sidebar-primary: #f67499;
+  --sidebar-primary-foreground: #1b1d1f;
+  --sidebar-accent: #3a2630;
+  --sidebar-accent-foreground: #f5f1ee;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #f67499;
+}
 
 @theme inline {
-  --color-background: #ffffff;
-  --color-foreground: #2D3436;
-  --color-primary: #f67499;
-  --color-primary-foreground: #ffffff;
-  --color-secondary: #2D3436;
-  --color-secondary-foreground: #ffffff;
-  --color-accent: #FFC107;
-  --color-accent-foreground: #2D3436;
-  --color-muted: #F9FAFB;
-  --color-muted-foreground: #6B7280;
-  --color-border: #E5E7EB;
-  --color-ring: #f67499;
-  --color-destructive: #EF4444;
-  --color-destructive-foreground: #ffffff;
-  --color-card: #ffffff;
-  --color-card-foreground: #2D3436;
-  --color-popover: #ffffff;
-  --color-popover-foreground: #2D3436;
-  --color-input: #E5E7EB;
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-tint: var(--brand-tint);
+  --color-cream: var(--cream);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
   --font-sans: var(--font-urbanist), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-heading: var(--font-fraunces), Georgia, serif;
+
+  /* Escala tipográfica fluida */
+  --text-display: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
+  --text-display--line-height: 1.02;
+  --text-h1: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+  --text-h1--line-height: 1.08;
+  --text-h2: clamp(1.6rem, 1.25rem + 1.4vw, 2.25rem);
+  --text-h2--line-height: 1.15;
+  --text-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --text-h3--line-height: 1.25;
+  --text-lead: clamp(1.05rem, 1rem + 0.35vw, 1.25rem);
+  --text-lead--line-height: 1.6;
+
+  --ease-out: var(--ease-out);
+  --animate-fade-up: fade-up var(--duration-reveal) var(--ease-out) both;
+  --animate-fade-in: fade-in var(--duration-reveal) var(--ease-out) both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 }
 
-* {
-  border-color: var(--color-border);
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans scroll-smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    @apply bg-background text-foreground;
+    text-rendering: optimizeLegibility;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  /* Pulsación física en todo botón: scale 0.97, rápido, curva de salida */
+  button,
+  [role="button"],
+  a[data-pressable] {
+    transition-property: transform, background-color, color, border-color, box-shadow, opacity;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-out);
+  }
+  button:active:not(:disabled),
+  [role="button"]:active:not(:disabled),
+  a[data-pressable]:active {
+    transform: scale(0.97);
+  }
+  ::selection {
+    background: var(--brand-soft);
+    color: var(--foreground);
+  }
 }
 
-body {
-  background: var(--color-background);
-  color: var(--color-foreground);
+@utility font-display {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "SOFT" 30;
+  letter-spacing: -0.01em;
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+/* Revelado al hacer scroll: gestionado por <Reveal>; sin movimiento si el usuario lo pide */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity var(--duration-reveal) var(--ease-out),
+    transform var(--duration-reveal) var(--ease-out);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Zoom suave de imagen en tarjetas, solo con ratón */
+@media (hover: hover) and (pointer: fine) {
+  .card-zoom img {
+    transition: transform var(--duration-ui) var(--ease-out);
+  }
+  .card-zoom:hover img {
+    transform: scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .animate-fade-up,
+  .animate-fade-in {
+    transform: none !important;
+    animation: fade-in var(--duration-ui) var(--ease-out) both;
+  }
+  .card-zoom:hover img {
+    transform: none;
+  }
+}
+
+/* Leaflet dentro de contenedores redondeados */
+.leaflet-container {
+  font-family: inherit;
+  border-radius: var(--radius-xl);
+  z-index: 0;
 }

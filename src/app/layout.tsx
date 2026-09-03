@@ -1,38 +1,41 @@
 import type { Metadata } from "next";
-import { Urbanist } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
+import { esES } from "@clerk/localizations";
+import { Fraunces, Urbanist } from "next/font/google";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
-const urbanist = Urbanist({
-  variable: "--font-urbanist",
+const urbanist = Urbanist({ variable: "--font-urbanist", subsets: ["latin"], display: "swap" });
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
   display: "swap",
+  axes: ["opsz", "SOFT"],
+  weight: "variable",
 });
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: {
-    default: "Foodzinder — Descubre los mejores restaurantes",
-    template: "%s | Foodzinder",
-  },
+  metadataBase: new URL(APP_URL),
+  title: { default: "Foodzinder — Dónde comer hoy, sin dar vueltas", template: "%s | Foodzinder" },
   description:
-    "Directorio especializado de restaurantes con geolocalización, reseñas y gamificación. Encuentra tu próximo restaurante favorito.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"),
-  openGraph: {
-    type: "website",
-    locale: "es_ES",
-    siteName: "Foodzinder",
-  },
+    "Directorio de restaurantes con cartas completas, alérgenos declarados, mapa y reseñas honestas. Madrid, Barcelona, Valencia y Sevilla.",
+  openGraph: { type: "website", locale: "es_ES", siteName: "Foodzinder" },
+  robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es" className={`${urbanist.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-sans">
-        {children}
-      </body>
-    </html>
+    <ClerkProvider
+      localization={esES}
+      appearance={{ variables: { colorPrimary: "#c9305f", colorText: "#2d3436", borderRadius: "0.75rem", fontFamily: "var(--font-urbanist), sans-serif" } }}
+    >
+      <html lang="es" className={`${urbanist.variable} ${fraunces.variable} h-full antialiased`}>
+        <body className="flex min-h-full flex-col font-sans">
+          <TooltipProvider>{children}</TooltipProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
