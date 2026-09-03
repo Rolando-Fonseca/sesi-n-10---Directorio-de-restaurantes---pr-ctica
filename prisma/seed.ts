@@ -1,4 +1,5 @@
-import { PrismaClient, TaxonomyScope, UserRole, PriceRange } from "@prisma/client";
+import { PrismaClient, TaxonomyScope } from "@prisma/client";
+import { seedDemo } from "./seed-demo";
 
 const prisma = new PrismaClient();
 
@@ -109,7 +110,7 @@ async function main() {
 
   for (const taxonomy of allTaxonomies) {
     await prisma.taxonomy.upsert({
-      where: { slug: taxonomy.slug },
+      where: { scope_slug: { scope: taxonomy.scope, slug: taxonomy.slug } },
       update: taxonomy,
       create: taxonomy,
     });
@@ -214,6 +215,12 @@ async function main() {
   }
 
   console.log(`Created ${badges.length} badges`);
+
+  // Datos de demostración (restaurantes, cartas, reseñas). Se omiten con SEED_DEMO=false.
+  if (process.env.SEED_DEMO !== "false") {
+    await seedDemo(prisma);
+  }
+
   console.log("Seeding complete!");
 }
 

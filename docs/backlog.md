@@ -13,15 +13,15 @@ Verificación: `git status` limpio, `bun run type-check` en verde.
 
 ## Fase 1: infraestructura y datos
 
-- [ ] Base de datos en Neon y `.env` local (guía en `docs/setup-servicios.md`).
-- [ ] Aplicación en Clerk con claves y webhook; rol `OWNER` asignable desde la app.
-- [ ] Primera migración (`prisma migrate dev --name init`) y quitar `prisma/migrations/` del `.gitignore` (las migraciones deben versionarse).
-- [ ] Añadir al esquema `WebhookDelivery` y el campo `Restaurant.gallery String[]`.
-- [ ] Ampliar el seed: 12 restaurantes reales de Madrid, Barcelona, Valencia y Sevilla con coordenadas, 4 cartas, 40 platos con alérgenos, 25 reseñas, 1 admin, 4 owners y 8 usuarios de ejemplo (sin depender de Clerk para los datos de ejemplo).
-- [ ] Imágenes de ejemplo generadas con claude-banana (portada por restaurante y algunos platos) en `public/images/`.
-- [ ] Cambiar Jest por Vitest y dejar `bun run test` funcionando con un test trivial.
+- [x] Base de datos en Neon y `.env` local (guía en `docs/setup-servicios.md`).
+- [x] Aplicación en Clerk con claves (la clave secreta responde). Webhook y rol `OWNER` desde la app: quedan para las fases 2 y 6.
+- [x] Primera migración `init` y migraciones versionadas en git.
+- [x] `WebhookDelivery` y `Restaurant.gallery` en el esquema. Corregida la unicidad de slug de taxonomía (por ámbito).
+- [x] Seed de demo idempotente: 12 restaurantes en cuatro ciudades con coordenadas, 12 cartas, 65 platos con alérgenos, 25 reseñas, 1 admin, 4 owners y 8 usuarios.
+- [x] Fotos de portada y de plato destacado generadas con claude-banana en `public/images/`.
+- [x] Vitest en lugar de Jest, 14 tests en verde.
 
-Verificación: `bun run db:migrate && bun run db:seed` contra Neon sin errores; `bun run test` en verde.
+Verificación hecha: migraciones y seed contra Neon sin errores; medias de reseñas recalculadas; `bun run test` y `type-check` en verde.
 
 ## Fase 2: capa de servidor
 
