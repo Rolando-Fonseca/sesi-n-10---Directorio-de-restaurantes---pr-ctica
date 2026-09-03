@@ -36,14 +36,17 @@ Verificación hecha: `type-check`, lint y tests en verde. Prueba de integración
 
 ## Fase 3: sitio público
 
-- [ ] Layout público: cabecera con buscador y menú móvil, pie con enlaces legales.
-- [ ] Home: hero con buscador, restaurantes destacados, cocinas, cómo funciona, llamada a dueños.
-- [ ] `/explore`: lista con filtros (cocina, características, precio, radio), vista mapa con Leaflet, "cerca de mí", estados de carga, vacío y error.
-- [ ] `/restaurant/[slug]`: hero con portada, datos y mapa, carta por categorías con filtro de alérgenos del usuario, reseñas con desglose, botón de wishlist.
-- [ ] `/pricing` con los planes del seed y `/legal/*`.
-- [ ] SEO: metadatos por ficha, Open Graph, JSON-LD `Restaurant`, sitemap y robots.
+- [x] Base de componentes shadcn/ui (Radix, Lucide) y tokens de marca con contraste verificado (ver `globals.css`).
+- [x] Layout público: cabecera con menú móvil (Sheet) y sesión de Clerk, pie con enlaces legales, enlace "saltar al contenido".
+- [x] Home: hero con buscador y collage, destacados (uno grande + lista numerada), cocinas, cómo funciona, llamada a dueños.
+- [x] `/explore`: filtros en la URL (texto, ciudad, cocina, características, precio), "cerca de mí" con radio, lista o mapa Leaflet, paginación, estado vacío y esqueleto de carga.
+- [x] `/restaurant/[slug]`: cabecera con portada y tarjeta de datos, carta por categorías con filtro de alérgenos preseleccionado desde el perfil, wishlist, desglose de valoraciones, formulario de reseña, mapa y cómo llegar, 404 propio.
+- [x] `/categories`, `/pricing` con los planes del seed y `/legal/[page]`.
+- [x] SEO: metadatos por ficha, Open Graph, JSON-LD `Restaurant` con carta, sitemap y robots.
+- [x] Revisión visual con Playwright a 1440, 768 y 375 px (home, explorar, ficha) recorriendo la página con scroll; consola sin errores; revelados por scroll solo con `@media (scripting: enabled)` para que rastreadores y navegadores sin JS vean todo el contenido.
+- [x] Revisión de movimiento: sin `ease-in`, sin `transition: all` (el botón de shadcn se acota a propiedades con nombre), sin `scale(0)`, pulsación `scale(0.97)`, zoom de imagen solo con ratón, modo reducido respetado.
 
-Verificación: capturas a 375, 768, 1024 y 1440 px; auditoría SEO; sin errores de hidratación en consola.
+Verificación hecha: `type-check` y lint limpios; todas las rutas responden 200 y las no publicadas 404; capturas en los tres anchos sin bloques ocultos ni errores de consola.
 
 ## Fase 4: paneles
 

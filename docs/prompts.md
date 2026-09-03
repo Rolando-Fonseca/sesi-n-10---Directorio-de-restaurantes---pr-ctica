@@ -63,6 +63,19 @@ Verificación en tres niveles antes del commit: 46 tests unitarios, una prueba d
 
 **Lección:** el receptor local de webhooks fue la prueba más barata y la que más confianza dio: demuestra el contrato del P5 antes de que exista n8n.
 
+## Fase 3: sitio público, con el contraste calculado antes que el color
+
+Antes de escribir CSS se calculó el contraste WCAG del rosa de marca con un script de diez líneas: 2,7:1 con texto blanco, insuficiente. La decisión salió del número, no del gusto: el rosa queda para fondos y detalles, y una frambuesa más profunda (5,2:1) lleva botones y enlaces. El comentario con las cifras está en `globals.css` para quien venga después.
+
+Orden de construcción: tokens y layout raíz, luego componentes compartidos (tarjeta, estrellas, buscador), luego páginas de más tráfico a menos (home, explorar, ficha), y por último cocinas, planes y legales. Cada página se comprobó con `curl` (código HTTP) antes de abrir un navegador.
+
+Dos correcciones que solo aparecieron al mirar la página de verdad:
+
+1. Las capturas de página completa salían con secciones en blanco. Causa: el revelado por scroll ocultaba el contenido hasta que el observador de intersección lo mostraba, y en una captura completa (o para un rastreador sin JavaScript) eso nunca ocurre. Se resolvió ocultando solo bajo `@media (scripting: enabled)`. Un primer intento con una etiqueta `<script>` en línea generó un error de React en navegación cliente y se descartó.
+2. shadcn genera `transition-all` en los botones; la regla del proyecto es transicionar propiedades con nombre. Se acotó desde `globals.css` en lugar de tocar los componentes generados.
+
+**Lección:** el panel de navegador integrado dio capturas poco fiables al hacer scroll; un guion de Playwright de treinta líneas que recorre la página y cuenta los bloques ocultos fue más rápido y dejó una prueba repetible.
+
 ## Convenciones de trabajo con la IA en este proyecto
 
 - Un commit por fase o sub-fase, mensaje en español con el porqué.

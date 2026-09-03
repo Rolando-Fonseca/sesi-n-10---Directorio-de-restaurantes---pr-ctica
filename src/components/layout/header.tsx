@@ -16,7 +16,7 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-md">
       <div className="container-page flex h-16 items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-2" aria-label="Foodzinder, inicio">
-          <Image src="/logo-color.svg" alt="Foodzinder" width={150} height={19} priority className="h-[19px] w-auto" />
+          <Image src="/logo-color.svg" alt="Foodzinder" width={150} height={19} priority style={{ height: 19, width: "auto" }} />
         </Link>
 
         <nav aria-label="Principal" className="hidden items-center gap-1 md:flex">

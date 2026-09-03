@@ -35,7 +35,7 @@ export function Footer() {
     <footer className="mt-auto border-t bg-cream">
       <div className="container-page grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div className="max-w-xs">
-          <Image src="/logo-color.svg" alt="Foodzinder" width={150} height={19} className="h-[19px] w-auto" />
+          <Image src="/logo-color.svg" alt="Foodzinder" width={150} height={19} style={{ height: 19, width: "auto" }} />
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
             Cartas completas, alérgenos declarados y reseñas de gente que ha pagado la cuenta. Sin patrocinados en los primeros puestos.
           </p>

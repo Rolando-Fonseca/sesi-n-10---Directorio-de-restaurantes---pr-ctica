@@ -212,6 +212,11 @@
   }
 }
 
+/* shadcn genera `transition-all` en los botones; aquí se acota a propiedades con nombre */
+[data-slot="button"] {
+  transition-property: color, background-color, border-color, box-shadow, transform, opacity;
+}
+
 @utility font-display {
   font-family: var(--font-display);
   font-variation-settings: "opsz" 144, "SOFT" 30;
@@ -225,17 +230,20 @@
   padding-inline: clamp(1rem, 4vw, 2rem);
 }
 
-/* Revelado al hacer scroll: gestionado por <Reveal>; sin movimiento si el usuario lo pide */
-.reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition:
-    opacity var(--duration-reveal) var(--ease-out),
-    transform var(--duration-reveal) var(--ease-out);
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
+/* Revelado al hacer scroll: gestionado por <Reveal>. Solo se oculta cuando el
+   navegador ejecuta JavaScript, así rastreadores y navegadores sin JS ven todo. */
+@media (scripting: enabled) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity var(--duration-reveal) var(--ease-out),
+      transform var(--duration-reveal) var(--ease-out);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Zoom suave de imagen en tarjetas, solo con ratón */

@@ -5,6 +5,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/). Vers
 ## [Unreleased]
 
 ### Añadido
+- Sitio público completo: home, explorar con filtros en la URL, «cerca de mí» y mapa Leaflet, ficha de restaurante con carta por categorías y filtro de alérgenos, wishlist, reseñas con cuatro criterios, cocinas, planes, legales, sitemap, robots y 404. Base shadcn/ui con tokens de marca de contraste verificado, Urbanist y Fraunces, Clerk en español.
 - Capa de servidor completa: eventos de dominio con webhooks salientes firmados (HMAC-SHA256, tres reintentos, auditoría en `webhook_deliveries`), servicios de restaurantes, cartas, reseñas, wishlist, gamificación, suscripción simulada, usuarios y taxonomías; queries tipadas con los DTOs de `docs/api.md`; Server Actions con el helper `runAction`.
 - Geocodificación de direcciones con Nominatim al dar de alta un restaurante sin coordenadas.
 - Límites por plan (restaurantes, cartas, platos por carta) con un plan gratuito implícito de un restaurante.
