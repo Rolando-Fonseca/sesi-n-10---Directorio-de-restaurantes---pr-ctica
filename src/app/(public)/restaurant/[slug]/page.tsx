@@ -1,3 +1,3 @@
-export default function RestaurantDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default function RestaurantDetailPage() {
   return <div>Restaurant Detail</div>;
 }

@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 
 export async function POST(req: Request) {
-  const body = await req.text();
+  await req.text(); // el cuerpo se leerá al verificar la firma
   const headerPayload = await headers();
   const signature = headerPayload.get("stripe-signature");
 
