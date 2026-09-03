@@ -14,9 +14,10 @@
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
     "db:push": "prisma db push",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:e2e": "jest --config jest.e2e.config.ts"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^6",
@@ -44,20 +45,17 @@
     "@react-email/components": "^0.3",
     "@react-email/render": "^1",
     "@tailwindcss/postcss": "^4",
-    "@testing-library/jest-dom": "^6",
-    "@testing-library/react": "^16",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6.1.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
-    "jest": "^29",
-    "jest-environment-jsdom": "^29",
     "prisma": "^6",
     "react-email": "^4",
     "tailwindcss": "^4",
-    "ts-jest": "^29",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^5.0.0"
   },
   "prisma": {
     "seed": "bun run prisma/seed.ts"
