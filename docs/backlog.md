@@ -50,12 +50,13 @@ Verificación hecha: `type-check` y lint limpios; todas las rutas responden 200 
 
 ## Fase 4: paneles
 
-- [ ] Layout de dashboard con navegación por rol.
-- [ ] Owner: listado y formulario de restaurante (dirección con geocodificación y ajuste en mapa), cartas y platos, asignación de cartas, suscripción simulada, facturas.
-- [ ] Admin: cola de aprobación con motivo de rechazo, taxonomías (CRUD), usuarios y roles, notificaciones, entregas de webhooks.
-- [ ] Usuario: perfil con preferencias y alérgenos, reseñas propias, wishlist agrupada por restaurante con total, puntos e insignias.
+- [x] Layout de panel con navegación por rol (barra lateral en escritorio, panel deslizante en móvil), avisos sin leer y `Toaster` de Sonner. Helper `requireUser` con sincronización perezosa desde Clerk.
+- [x] Owner: resumen con límites del plan y rechazos destacados; restaurantes con formulario completo (mapa para colocar y ajustar el marcador, geocodificación desde el navegador o en servidor, taxonomías por familias) y acciones de estado; cartas con editor de platos (categorías locales, alérgenos, presentación, disponibilidad, destacado); reseñas recibidas; plan y facturación simulados con datos fiscales; facturas con IVA desglosado.
+- [x] Admin: resumen con las mismas cifras que la API privada y cola de aprobación; restaurantes por estado con aprobar, rechazar con motivo y reasignar dueño; vista de revisión de una ficha con carta y mapa; usuarios y roles (escribe en Clerk y Prisma); taxonomías (CRUD con desactivación si están en uso); moderación de reseñas; webhooks con destinos, entregas, reintento y evento de prueba.
+- [x] Usuario: resumen con puntos y nivel, perfil con alérgenos y preferencias, insignias e historial de puntos, platos guardados agrupados por restaurante con total, reseñas propias.
+- [ ] Flujo completo probado en navegador con una cuenta real de Clerk: registro, alta de restaurante, aprobación por admin, ficha pública, reseña. Pendiente de que el usuario cree su cuenta (docs/setup-servicios.md, apartado 6).
 
-Verificación: flujo completo probado en navegador: registro de owner, alta de restaurante, aprobación por admin, ficha pública visible, reseña de usuario.
+Verificación hecha: `type-check` y lint limpios; las rutas del panel redirigen a `/sign-in` sin sesión.
 
 ## Fase 5: API v1, webhooks y contrato
 

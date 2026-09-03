@@ -5,6 +5,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/). Vers
 ## [Unreleased]
 
 ### Añadido
+- Paneles por rol. Dueño: restaurantes con mapa para situar el local, cartas y platos con alérgenos, reseñas recibidas, plan simulado y facturas. Administrador: cola de aprobación con motivo de rechazo, reasignación de dueño, usuarios y roles, taxonomías, moderación de reseñas y auditoría de webhooks con evento de prueba. Usuario: perfil con alérgenos y preferencias, puntos e insignias, platos guardados con totales y reseñas propias.
 - Sitio público completo: home, explorar con filtros en la URL, «cerca de mí» y mapa Leaflet, ficha de restaurante con carta por categorías y filtro de alérgenos, wishlist, reseñas con cuatro criterios, cocinas, planes, legales, sitemap, robots y 404. Base shadcn/ui con tokens de marca de contraste verificado, Urbanist y Fraunces, Clerk en español.
 - Capa de servidor completa: eventos de dominio con webhooks salientes firmados (HMAC-SHA256, tres reintentos, auditoría en `webhook_deliveries`), servicios de restaurantes, cartas, reseñas, wishlist, gamificación, suscripción simulada, usuarios y taxonomías; queries tipadas con los DTOs de `docs/api.md`; Server Actions con el helper `runAction`.
 - Geocodificación de direcciones con Nominatim al dar de alta un restaurante sin coordenadas.
