@@ -73,7 +73,8 @@ Convenciones:
 
 - Toda mutación pasa por una Server Action con el patrón validar, autenticar, comprobar rol, ejecutar servicio, revalidar caché.
 - Las queries no comprueban roles por sí mismas; lo hace la página o el route handler que las llama, según la ruta.
-- Los servicios reciben datos ya validados y devuelven `ActionResponse<T>` (`src/types/api.ts`), nunca lanzan excepciones al cliente.
+- Los servicios reciben datos ya validados y lanzan `DomainError` con un código estable (`NOT_FOUND`, `FORBIDDEN`, `LIMIT_REACHED`, `INVALID_TRANSITION`...). El helper `runAction` de las Server Actions y los route handlers de la API los convierten en `ActionResponse<T>` o en el código HTTP correspondiente. Nada llega al cliente como excepción.
+- Los servicios con lógica pura (máquina de estados, agregación de valoraciones, geodistancia, facturación) viven en ficheros sin Prisma y se testean sin base de datos.
 - El middleware (`src/middleware.ts`) protege `/dashboard/*` por rol leyendo `publicMetadata.role` de la sesión de Clerk. La verificación definitiva se repite en servidor con `requireRole`.
 
 ## Autenticación y roles

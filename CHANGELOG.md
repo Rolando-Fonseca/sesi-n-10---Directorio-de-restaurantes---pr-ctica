@@ -5,6 +5,10 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/). Vers
 ## [Unreleased]
 
 ### Añadido
+- Capa de servidor completa: eventos de dominio con webhooks salientes firmados (HMAC-SHA256, tres reintentos, auditoría en `webhook_deliveries`), servicios de restaurantes, cartas, reseñas, wishlist, gamificación, suscripción simulada, usuarios y taxonomías; queries tipadas con los DTOs de `docs/api.md`; Server Actions con el helper `runAction`.
+- Geocodificación de direcciones con Nominatim al dar de alta un restaurante sin coordenadas.
+- Límites por plan (restaurantes, cartas, platos por carta) con un plan gratuito implícito de un restaurante.
+- 32 tests nuevos sobre firma, entrega, máquina de estados, valoraciones, geodistancia y facturación.
 - Base de datos en Neon con migraciones versionadas (`init` y `taxonomy_slug_por_ambito`), `directUrl` para migrar por conexión directa.
 - Modelo `WebhookDelivery` para auditar los eventos salientes y campo `gallery` en `Restaurant`.
 - Datos de demostración idempotentes: 13 usuarios, 12 restaurantes en Madrid, Barcelona, Valencia y Sevilla con coordenadas reales, 12 cartas, 65 platos con alérgenos y presentación, 25 reseñas con cuatro criterios y medias recalculadas, una notificación de restaurante pendiente. Se omiten con `SEED_DEMO=false`.

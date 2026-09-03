@@ -25,13 +25,14 @@ Verificación hecha: migraciones y seed contra Neon sin errores; medias de rese�
 
 ## Fase 2: capa de servidor
 
-- [ ] `src/server/queries/`: restaurantes (público, por owner, por estado), menús, taxonomías, reseñas, wishlist, notificaciones, estadísticas.
-- [ ] `src/server/services/`: restaurantes (crear con geocodificación, actualizar, aprobar, rechazar, archivar, reenviar), menús y platos, reseñas (recalcular medias), wishlist, puntos e insignias, suscripción simulada.
-- [ ] `src/server/actions/`: una Server Action por mutación con el patrón validar, autenticar, rol, servicio, revalidar.
-- [ ] `src/server/events/`: emisor de eventos, firma HMAC, reintentos con `after()`, registro en `webhook_deliveries`.
-- [ ] Tests unitarios de servicios y validaciones.
+- [x] `src/server/queries/`: restaurantes (búsqueda con filtros, radio y paginación; ficha con carta por categorías y desglose de valoraciones; por owner; por estado), cartas, taxonomías, reseñas, wishlist agrupada con totales, usuarios, notificaciones, planes, entregas de webhooks y estadísticas por periodo.
+- [x] `src/server/services/`: restaurantes (alta con geocodificación Nominatim y límite por plan, edición, máquina de estados con eventos, reasignación), cartas, categorías y platos (límites por plan), reseñas (una por usuario y restaurante, medias recalculadas, moderación), wishlist, puntos e insignias, suscripción simulada con factura e IVA, usuarios (rol en Clerk y Prisma a la vez), taxonomías.
+- [x] `src/server/actions/`: helper `runAction` y acciones para restaurantes, cartas, reseñas, wishlist, cuenta y administración (incluido evento de prueba y reintento de webhooks).
+- [x] `src/server/events/`: tipos de evento, firma HMAC-SHA256, entrega con 3 reintentos y registro en `webhook_deliveries`, ejecución fuera de la petición con `after()`.
+- [x] Webhook de Clerk reescrito sobre el servicio de usuarios (emite `user.created` una sola vez).
+- [x] 46 tests unitarios (firma, entrega, máquina de estados, valoraciones, geodistancia, facturación, validaciones).
 
-Verificación: tests en verde; cada servicio cubierto al menos por un caso feliz y uno de error.
+Verificación hecha: `type-check`, lint y tests en verde. Prueba de integración contra Neon (reseña, puntos, wishlist, transiciones, suscripción con factura) y contra un receptor HTTP local que verificó la firma de los webhooks y registró el fallo de una URL caída con reintentos. Datos de demo restaurados al terminar.
 
 ## Fase 3: sitio público
 

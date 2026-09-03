@@ -39,6 +39,30 @@ Orden de escritura, elegido a propósito:
 
 **Lección:** en un proyecto que será base de otro, el contrato entre ambos es el documento más valioso. Se escribió con la vista puesta en los casos de uso del P5, no en lo que era cómodo implementar.
 
+## Fase 1: infraestructura con las cuentas del usuario
+
+El usuario creó Neon y Clerk y pegó las claves en un documento versionado. La IA las movió al `.env` antes de cualquier commit, restauró el documento y lo verificó con `grep`. Ninguna clave salió de la máquina.
+
+**Lección:** el primer paso tras recibir credenciales es comprobar dónde están, no usarlas. Y la guía de configuración debe decir explícitamente "pégalo en este fichero exacto", con la ruta completa, porque "en el `.env`" no fue suficiente.
+
+El seed de demo se escribió en dos ficheros: datos puros (`seed-data.ts`, legible por cualquiera) y lógica de inserción idempotente (`seed-demo.ts`). El primer intento falló por un bug real del esquema (slug único global en taxonomías, cuando "tapas" existe en dos ámbitos). Se corrigió el esquema con una migración en lugar de renombrar el dato.
+
+**Lección:** un seed con datos realistas es también un test del esquema. Vale la pena escribirlo antes que la interfaz.
+
+## Fase 2: capa de servidor, del contrato hacia dentro
+
+Orden de escritura, de fuera hacia dentro:
+
+1. **Eventos y firma** (`src/server/events/`), porque `docs/api.md` ya fijaba su forma y son la interfaz con el P5.
+2. **Servicios puros** (máquina de estados, valoraciones, geodistancia, facturación), con tests sin base de datos. Aquí se decidieron las reglas de negocio con ejemplos concretos: la media global es media de puntuaciones y no de medias; un owner no reseña su propio local; sin plan hay un restaurante gratuito.
+3. **Servicios con Prisma**, que solo orquestan lo anterior y lanzan `DomainError` con código estable.
+4. **Queries**, que devuelven los mismos DTOs que la API pública documentada, para que páginas y route handlers no diverjan.
+5. **Server Actions** con un único helper `runAction`: validar, autenticar, rol, servicio, revalidar. Ninguna acción repite ese código.
+
+Verificación en tres niveles antes del commit: 46 tests unitarios, una prueba de humo de las queries contra Neon con los datos reales del seed (búsqueda "paella", radio de 5 km desde la Puerta del Sol, ficha con alérgenos), y una prueba de integración que ejecutó reseña, puntos, wishlist, transiciones de estado, suscripción con factura y **webhooks contra un receptor HTTP local que verificó la firma HMAC** y registró el fallo de una URL caída. Al terminar, dejó los datos de demo como estaban.
+
+**Lección:** el receptor local de webhooks fue la prueba más barata y la que más confianza dio: demuestra el contrato del P5 antes de que exista n8n.
+
 ## Convenciones de trabajo con la IA en este proyecto
 
 - Un commit por fase o sub-fase, mensaje en español con el porqué.
