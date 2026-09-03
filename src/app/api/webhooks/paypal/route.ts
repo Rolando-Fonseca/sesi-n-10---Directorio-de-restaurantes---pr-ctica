@@ -1,5 +1,5 @@
 
-export async function POST(req: Request) {
+export async function POST() {
   // TODO: Verify PayPal webhook signature and process events
   // - BILLING.SUBSCRIPTION.ACTIVATED
   // - BILLING.SUBSCRIPTION.CANCELLED
