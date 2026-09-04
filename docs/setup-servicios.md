@@ -57,7 +57,7 @@ openssl rand -hex 32
 1. Entrar en https://vercel.com y crear cuenta con GitHub.
 2. **Add New → Project**, importar `Rolando-Fonseca/sesi-n-10---Directorio-de-restaurantes---pr-ctica`. En **Settings → Git**, poner `rolando` como **Production Branch** (el repo tiene `main` con el historial del equipo; el proyecto vive en `rolando`).
 3. Framework: Next.js (lo detecta solo). `vercel.json` ya fija la región de Londres (junto a Neon), `bun install` y el comando `vercel-build`, que ejecuta las migraciones antes del build. No hace falta tocar nada.
-4. **Environment Variables**: pegar las mismas del `.env` cambiando `NEXT_PUBLIC_APP_URL` por la URL que asigne Vercel (por ejemplo `https://foodzinder.vercel.app`). Imprescindibles: `DATABASE_URL`, `DIRECT_URL`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`, `NEXT_PUBLIC_CLERK_SIGN_IN_URL`, `NEXT_PUBLIC_CLERK_SIGN_UP_URL`, `FOODZINDER_API_KEY`, `WEBHOOK_SECRET`. `WEBHOOK_URLS` se rellena en el P5 (o con un `webhook.site` para la demo).
+4. **Environment Variables**: pegar las mismas del `.env`. `NEXT_PUBLIC_APP_URL` puede omitirse en Vercel: si falta o está vacía, la app usa la URL que Vercel expone en cada despliegue (`VERCEL_PROJECT_PRODUCTION_URL`). Si se define, debe ser la URL completa con `https://`. Imprescindibles: `DATABASE_URL`, `DIRECT_URL`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`, `NEXT_PUBLIC_CLERK_SIGN_IN_URL`, `NEXT_PUBLIC_CLERK_SIGN_UP_URL`, `FOODZINDER_API_KEY`, `WEBHOOK_SECRET`. `WEBHOOK_URLS` se rellena en el P5 (o con un `webhook.site` para la demo).
 5. Deploy. Copiar la URL final.
 
 ### CI en GitHub Actions

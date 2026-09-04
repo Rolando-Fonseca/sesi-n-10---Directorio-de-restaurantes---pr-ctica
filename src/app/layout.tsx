@@ -3,6 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { esES } from "@clerk/localizations";
 import { Fraunces, Urbanist } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { resolveAppUrl } from "@/lib/env";
 import "./globals.css";
 
 const urbanist = Urbanist({ variable: "--font-urbanist", subsets: ["latin"], display: "swap" });
@@ -14,10 +15,8 @@ const fraunces = Fraunces({
   weight: "variable",
 });
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(APP_URL),
+  metadataBase: new URL(resolveAppUrl()),
   title: { default: "Foodzinder — Dónde comer hoy, sin dar vueltas", template: "%s | Foodzinder" },
   description:
     "Directorio de restaurantes con cartas completas, alérgenos declarados, mapa y reseñas honestas. Madrid, Barcelona, Valencia y Sevilla.",

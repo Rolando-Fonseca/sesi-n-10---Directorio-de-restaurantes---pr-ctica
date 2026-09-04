@@ -3,8 +3,21 @@
  * Las opcionales devuelven valores vacíos en lugar de lanzar, para que la app
  * arranque sin webhooks ni API key configurados (por ejemplo en local).
  */
+/**
+ * URL pública de la app. Orden: NEXT_PUBLIC_APP_URL si tiene valor (una
+ * variable vacía cuenta como ausente), después la URL que Vercel expone en
+ * cada despliegue, y por último localhost.
+ */
+export function resolveAppUrl(): string {
+  const explicit = process.env.NEXT_PUBLIC_APP_URL?.trim();
+  if (explicit) return explicit.replace(/\/+$/, "");
+  const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim() || process.env.VERCEL_URL?.trim();
+  if (vercel) return `https://${vercel.replace(/^https?:\/\//, "")}`;
+  return "http://localhost:3000";
+}
+
 export const env = {
-  appUrl: () => process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
+  appUrl: resolveAppUrl,
 
   /** URLs destino de los webhooks salientes, separadas por comas. */
   webhookUrls: (): string[] =>
