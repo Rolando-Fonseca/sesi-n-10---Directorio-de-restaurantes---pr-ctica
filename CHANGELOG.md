@@ -25,6 +25,7 @@ Primera versión desplegada: https://foodzinder.vercel.app
 - Reglas en `.gitignore` para impedir que una salida accidental de `tsc` vuelva a ensuciar `src/` y `prisma/`.
 
 ### Corregido
+- Abrir `/api/v1` en un navegador redirigía al handshake de Clerk: `/api` queda fuera del matcher del middleware.
 - El primer despliegue fallaba con `ERR_INVALID_URL` porque `NEXT_PUBLIC_APP_URL` estaba vacía: ahora una variable vacía cuenta como ausente y se usa la URL que expone Vercel.
 - El slug de taxonomía era único global, y "tapas" existe como cocina y como categoría de carta: el seed pisaba una con la otra. Ahora la unicidad es por ámbito más slug.
 

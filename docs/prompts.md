@@ -101,6 +101,10 @@ El usuario importó el repo en Vercel y pegó los logs de dos fallos consecutivo
 
 Verificación final desde fuera: `curl` a las páginas, a la API (datos y cabeceras de límite), al sitemap y al panel (redirige a login), más una captura de una ficha en producción.
 
+Tercer fallo, este sí de código y encontrado por el usuario: "la API no funciona". Con `curl` respondía 200; abierta en un navegador daba un 307 al handshake de Clerk. La diferencia era la cabecera `Accept: text/html`: `clerkMiddleware` seguía envolviendo `/api` aunque el handler la saltara. Se excluyó `/api` del matcher. La verificación se repitió con `curl -A Mozilla -H "Accept: text/html"`.
+
+**Lección:** verificar como lo hará el evaluador, no como lo hace la herramienta. Un `curl` desnudo no es un navegador.
+
 ## Convenciones de trabajo con la IA en este proyecto
 
 - Un commit por fase o sub-fase, mensaje en español con el porqué.
