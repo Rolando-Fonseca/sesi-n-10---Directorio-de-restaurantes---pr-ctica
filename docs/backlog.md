@@ -70,8 +70,9 @@ Verificación hecha: 68 tests en verde; `curl` contra el servidor local devuelve
 
 ## Fase 6: calidad y despliegue
 
-- [ ] CI: lint, type-check, tests y build en cada push y PR.
-- [ ] Vercel: importar repo, variables de entorno, `vercel-build` con `prisma migrate deploy`.
+- [x] CI: lint, type-check, migraciones y seed en Postgres efímero, 68 tests y build en cada push y PR a `main` y `rolando`. Primera ejecución en verde. El build se activa al añadir las claves de Clerk como secrets del repo.
+- [x] `next build` local sin errores; `vercel.json` con región de Londres, `bun install` y `vercel-build` (migraciones antes del build).
+- [ ] Vercel: importar repo (rama de producción `rolando`) y variables de entorno. En curso por el usuario.
 - [ ] Webhook de Clerk apuntando a la URL de producción.
 - [ ] Revisión de accesibilidad (contraste, foco, etiquetas) y de rendimiento (imágenes con `next/image`, fuentes con `display: swap`).
 - [ ] Actualizar README con las URLs y `CHANGELOG` con la versión 1.0.0.
@@ -80,9 +81,9 @@ Verificación: trío de URLs (repo, demo, API viva con `curl`), CI en verde, `np
 
 ## Fase 7: presentación
 
-- [ ] Guion de demo de 5 minutos: alta de restaurante, aprobación, ficha pública, reseña, evento de webhook visible.
-- [ ] `docs/prompts.md` cerrado con las lecciones de ingeniería de contexto.
-- [ ] Puente al P5: qué eventos existen y qué automatizará n8n.
+- [x] Guion de demo de 5 minutos en `docs/demo.md`, con preguntas probables y lista previa.
+- [ ] `docs/prompts.md` cerrado con las lecciones de ingeniería de contexto (falta la de despliegue).
+- [x] Puente al P5 en `docs/n8n-integration.md`: mecanismos, verificación de firma en n8n y cinco flujos propuestos.
 
 ## Fuera de alcance (documentado, no olvidado)
 
