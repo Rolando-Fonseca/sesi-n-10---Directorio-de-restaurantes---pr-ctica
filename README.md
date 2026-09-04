@@ -2,7 +2,14 @@
 
 Directorio de restaurantes con roles (administrador, dueño, usuario), aprobación de fichas, cartas con alérgenos, geolocalización, reseñas multicriterio y gamificación. Proyecto **P4** del módulo (Sesión 10), construido orquestando IA con foco en ingeniería de contexto, y diseñado para ser la base del **P5** (Sesión 17: automatización de procesos con n8n).
 
-> **Demo:** pendiente de despliegue · **Docs:** [docs/architecture.md](docs/architecture.md) · [docs/api.md](docs/api.md) · [docs/adr/](docs/adr/) · [docs/prompts.md](docs/prompts.md) · [CHANGELOG.md](CHANGELOG.md)
+> **Demo:** https://foodzinder.vercel.app · **API viva:** https://foodzinder.vercel.app/api/v1 · **Repo:** https://github.com/Rolando-Fonseca/sesi-n-10---Directorio-de-restaurantes---pr-ctica (rama `rolando`)
+>
+> **Docs:** [arquitectura](docs/architecture.md) · [API y webhooks](docs/api.md) · [ADRs](docs/adr/) · [ingeniería de contexto](docs/prompts.md) · [guion de demo](docs/demo.md) · [puente a n8n](docs/n8n-integration.md) · [changelog](CHANGELOG.md)
+
+```bash
+# La API pública responde sin clave; la privada, con X-Api-Key (ver docs/api.md)
+curl "https://foodzinder.vercel.app/api/v1/restaurants?query=paella"
+```
 
 ## Origen y autoría
 
@@ -37,14 +44,14 @@ Lo que el enunciado pedía y queda fuera del alcance de esta entrega, con el por
 | Fase | Contenido | Estado |
 |------|-----------|--------|
 | 0 | Limpieza del repo y documentación base | Hecha |
-| 1 | Infraestructura: Neon, Clerk, migraciones, seed con datos reales | Pendiente |
-| 2 | Capa de servidor: queries, actions, servicios, eventos de dominio | Pendiente |
-| 3 | Sitio público: home, explorar con mapa, ficha de restaurante | Pendiente |
-| 4 | Paneles de dueño, administrador y usuario | Pendiente |
-| 5 | API v1, webhooks salientes, tests de contrato | Pendiente |
-| 6 | QA, SEO, CI en verde, despliegue en Vercel | Pendiente |
+| 1 | Infraestructura: Neon, Clerk, migraciones, seed con datos reales y fotos | Hecha |
+| 2 | Capa de servidor: queries, actions, servicios, eventos de dominio | Hecha |
+| 3 | Sitio público: home, explorar con mapa, ficha de restaurante | Hecha |
+| 4 | Paneles de dueño, administrador y usuario | Hecha |
+| 5 | API v1, webhooks salientes, tests de contrato | Hecha |
+| 6 | CI en verde, despliegue en Vercel | Hecha |
 
-El detalle de cada fase está en [docs/backlog.md](docs/backlog.md).
+Tests: 71 (unitarios y de contrato). CI: [GitHub Actions](https://github.com/Rolando-Fonseca/sesi-n-10---Directorio-de-restaurantes---pr-ctica/actions). El detalle de cada fase está en [docs/backlog.md](docs/backlog.md).
 
 ## Cómo ejecutarlo
 
@@ -70,6 +77,12 @@ bun run db:studio    # Prisma Studio
 ```
 
 La guía paso a paso para crear las cuentas de Neon, Clerk y Vercel está en [docs/setup-servicios.md](docs/setup-servicios.md).
+
+## Despliegue
+
+Vercel (región de Londres, junto a Neon) desde la rama `rolando` con su integración de GitHub. `vercel-build` ejecuta `prisma migrate deploy` antes de compilar, así cada despliegue lleva el esquema al día. CI en GitHub Actions: lint, tipos, migraciones y seed sobre un PostgreSQL efímero, tests y build. Decisiones y límites en [ADR-0005](docs/adr/0005-neon-y-vercel.md).
+
+Aviso para la demo: Neon y Vercel arrancan en frío tras inactividad; la primera petición puede tardar unos segundos.
 
 ## Estructura
 

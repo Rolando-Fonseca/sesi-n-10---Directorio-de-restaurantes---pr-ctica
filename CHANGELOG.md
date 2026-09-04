@@ -2,9 +2,13 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/). Versionado semántico.
 
-## [Unreleased]
+## [1.0.0] - 2026-09-04
+
+Primera versión desplegada: https://foodzinder.vercel.app
 
 ### Añadido
+- Despliegue en Vercel (Londres) desde la rama `rolando` con migraciones en el build; CI en GitHub Actions con PostgreSQL efímero, 71 tests y build.
+- Guion de demo (`docs/demo.md`) y puente al P5 con n8n (`docs/n8n-integration.md`).
 - API REST `/api/v1`: endpoints públicos de solo lectura y endpoints privados con `X-Api-Key` para n8n, envoltura de respuesta común, límite de peticiones con cabeceras `X-RateLimit-*` e índice en `GET /api/v1`. 17 tests de contrato contra la base de datos.
 - Paneles por rol. Dueño: restaurantes con mapa para situar el local, cartas y platos con alérgenos, reseñas recibidas, plan simulado y facturas. Administrador: cola de aprobación con motivo de rechazo, reasignación de dueño, usuarios y roles, taxonomías, moderación de reseñas y auditoría de webhooks con evento de prueba. Usuario: perfil con alérgenos y preferencias, puntos e insignias, platos guardados con totales y reseñas propias.
 - Sitio público completo: home, explorar con filtros en la URL, «cerca de mí» y mapa Leaflet, ficha de restaurante con carta por categorías y filtro de alérgenos, wishlist, reseñas con cuatro criterios, cocinas, planes, legales, sitemap, robots y 404. Base shadcn/ui con tokens de marca de contraste verificado, Urbanist y Fraunces, Clerk en español.
@@ -21,6 +25,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/). Vers
 - Reglas en `.gitignore` para impedir que una salida accidental de `tsc` vuelva a ensuciar `src/` y `prisma/`.
 
 ### Corregido
+- El primer despliegue fallaba con `ERR_INVALID_URL` porque `NEXT_PUBLIC_APP_URL` estaba vacía: ahora una variable vacía cuenta como ausente y se usa la URL que expone Vercel.
 - El slug de taxonomía era único global, y "tapas" existe como cocina y como categoría de carta: el seed pisaba una con la otra. Ahora la unicidad es por ámbito más slug.
 
 ### Eliminado

@@ -72,12 +72,13 @@ Verificación hecha: 68 tests en verde; `curl` contra el servidor local devuelve
 
 - [x] CI: lint, type-check, migraciones y seed en Postgres efímero, 68 tests y build en cada push y PR a `main` y `rolando`. Primera ejecución en verde. El build se activa al añadir las claves de Clerk como secrets del repo.
 - [x] `next build` local sin errores; `vercel.json` con región de Londres, `bun install` y `vercel-build` (migraciones antes del build).
-- [ ] Vercel: importar repo (rama de producción `rolando`) y variables de entorno. En curso por el usuario.
-- [ ] Webhook de Clerk apuntando a la URL de producción.
-- [ ] Revisión de accesibilidad (contraste, foco, etiquetas) y de rendimiento (imágenes con `next/image`, fuentes con `display: swap`).
-- [ ] Actualizar README con las URLs y `CHANGELOG` con la versión 1.0.0.
+- [x] Vercel: desplegado en https://foodzinder.vercel.app desde `rolando`. Dos tropiezos documentados en `docs/prompts.md`: variable `NEXT_PUBLIC_APP_URL` vacía y claves de Clerk no copiadas al panel de Vercel.
+- [ ] Webhook de Clerk apuntando a `https://foodzinder.vercel.app/api/webhooks/clerk` y `CLERK_WEBHOOK_SECRET` en Vercel (pasos en `docs/setup-servicios.md`, apartado 5). Mientras tanto, la sincronización perezosa crea el usuario en la primera visita autenticada.
+- [ ] `WEBHOOK_URLS` en Vercel apuntando a un `webhook.site` y evento de prueba recibido con firma.
+- [x] Accesibilidad y rendimiento: contraste calculado, foco visible, etiquetas en todos los campos, imágenes con `next/image` y fuentes con `display: swap`.
+- [x] README con el trío de URLs y `CHANGELOG` 1.0.0.
 
-Verificación: trío de URLs (repo, demo, API viva con `curl`), CI en verde, `npm run build` sin avisos.
+Verificación hecha: repo público, demo viva, API viva con `curl` (datos y cabeceras de límite), CI en verde, `next build` sin errores.
 
 ## Fase 7: presentación
 

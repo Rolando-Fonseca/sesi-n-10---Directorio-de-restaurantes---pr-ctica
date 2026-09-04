@@ -90,6 +90,17 @@ Verificación en dos niveles: 68 tests (17 de contrato) y `curl` contra el servi
 
 **Lección:** escribir el contrato antes que el código convierte los tests en una comprobación de que la documentación no miente, y deja a n8n un documento que ya está probado.
 
+## Fase 6: despliegue, donde el error siempre está en el entorno
+
+El usuario importó el repo en Vercel y pegó los logs de dos fallos consecutivos. Los dos eran de configuración, no de código, y los dos se leían en una línea del log:
+
+1. `ERR_INVALID_URL ... input: ''`: la variable `NEXT_PUBLIC_APP_URL` existía vacía. Se hizo el código tolerante (vacía cuenta como ausente y se usa la URL que expone Vercel), se añadió un test que reproduce el caso y se comprobó el build con la variable vacía antes de subir.
+2. `Missing publishableKey`: las claves de Clerk no estaban en Vercel. El `.env` no viaja al servidor; la guía se amplió con una tabla de "variable, de dónde sale" y con la aclaración de que la parte antes del `=` es el nombre y la de después el valor, porque esa fue la duda real.
+
+**Lección:** pegar el log entero es la mejor pregunta posible; la IA puede diagnosticar en segundos si ve la línea exacta. Y cada duda "tonta" del usuario es un hueco de la documentación: se cierra en la guía, no en el chat.
+
+Verificación final desde fuera: `curl` a las páginas, a la API (datos y cabeceras de límite), al sitemap y al panel (redirige a login), más una captura de una ficha en producción.
+
 ## Convenciones de trabajo con la IA en este proyecto
 
 - Un commit por fase o sub-fase, mensaje en español con el porqué.
