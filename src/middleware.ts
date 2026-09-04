@@ -28,6 +28,9 @@ export default clerkMiddleware(async (auth, req) => {
 
 export const config = {
   matcher: [
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?)).*)",
+    // Sin /api: la API v1 y los webhooks entrantes no llevan sesión de Clerk y
+    // no deben pasar por su handshake (en instancias de desarrollo redirige las
+    // peticiones de navegador a accounts.dev, lo que rompía abrir /api/v1 a mano).
+    "/((?!api|_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?)).*)",
   ],
 };
