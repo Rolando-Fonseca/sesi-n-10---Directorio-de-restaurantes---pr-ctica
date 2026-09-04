@@ -60,12 +60,13 @@ Verificación hecha: `type-check` y lint limpios; las rutas del panel redirigen 
 
 ## Fase 5: API v1, webhooks y contrato
 
-- [ ] Route handlers públicos y privados según `docs/api.md`.
-- [ ] Rate limiting en memoria y clave de API.
-- [ ] Tests de contrato de cada endpoint y de la firma de webhooks.
-- [ ] Endpoint de prueba de webhook desde el panel de admin ("enviar evento de prueba").
+- [x] Route handlers públicos (`/restaurants`, `/restaurants/{slug}`, `/restaurants/{slug}/reviews`, `/taxonomies`, `/plans`) y privados (`/admin/restaurants`, approve, reject, `/admin/reviews`, `/admin/stats`, `/admin/webhook-deliveries`, retry, `/admin/webhooks/test`) más el índice `GET /api/v1`. Envoltura común, `DomainError` y `ZodError` convertidos en códigos HTTP.
+- [x] Límite de peticiones en memoria (60/min público, 120/min privado) con cabeceras `X-RateLimit-*` y `429` con `Retry-After`; clave de API comparada en tiempo constante; `/api/*` fuera del middleware de Clerk.
+- [x] 22 tests nuevos: límite de peticiones y 17 de contrato contra Neon (envoltura, códigos, cabeceras, 401, 400, 404, 409, rechazar y aprobar con restaurante de prueba efímero).
+- [x] Evento de prueba desde el panel de admin y desde la API.
+- [ ] Webhook de prueba recibido en un `webhook.site` desde la demo desplegada (Fase 6, cuando haya URL y `WEBHOOK_URLS` en Vercel).
 
-Verificación: tests de contrato en verde; `curl` contra la demo devuelve lo documentado; un webhook de prueba llega a un `webhook.site`.
+Verificación hecha: 68 tests en verde; `curl` contra el servidor local devuelve lo documentado.
 
 ## Fase 6: calidad y despliegue
 

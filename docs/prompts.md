@@ -76,6 +76,20 @@ Dos correcciones que solo aparecieron al mirar la página de verdad:
 
 **Lección:** el panel de navegador integrado dio capturas poco fiables al hacer scroll; un guion de Playwright de treinta líneas que recorre la página y cuenta los bloques ocultos fue más rápido y dejó una prueba repetible.
 
+## Fase 4: paneles, un solo patrón para todas las acciones
+
+Con la capa de servidor cerrada, los tres paneles (dueño, administrador, usuario) se construyeron sobre dos piezas genéricas: `requireUser` para la sesión y `ActionButton` para ejecutar cualquier Server Action con confirmación, toast y refresco. Ninguna página repite ese código. El lint atrapó un error real, un componente definido dentro del render en el formulario de restaurante, que en producción habría hecho perder el foco al escribir.
+
+**Lección:** lo que no se puede probar en navegador sin una cuenta real (crear cuentas está fuera de lo que la IA puede hacer) se compensa con tipos estrictos, lint y un patrón único; la prueba manual queda para el usuario con pasos exactos en `docs/setup-servicios.md`.
+
+## Fase 5: la API, del contrato hacia dentro, y el test como prueba de que el documento es cierto
+
+Los route handlers se escribieron leyendo `docs/api.md` como especificación, sin volver a decidir nada: formas de respuesta, códigos, cabeceras y límites ya estaban fijados en la Fase 0. Los tests de contrato ejecutan cada handler con un `Request` real contra la base de datos del seed y comprueban exactamente lo que dice el documento; el flujo rechazar y aprobar usa un restaurante de prueba que el propio test crea y borra.
+
+Verificación en dos niveles: 68 tests (17 de contrato) y `curl` contra el servidor local para ver cabeceras y códigos con los ojos.
+
+**Lección:** escribir el contrato antes que el código convierte los tests en una comprobación de que la documentación no miente, y deja a n8n un documento que ya está probado.
+
 ## Convenciones de trabajo con la IA en este proyecto
 
 - Un commit por fase o sub-fase, mensaje en español con el porqué.

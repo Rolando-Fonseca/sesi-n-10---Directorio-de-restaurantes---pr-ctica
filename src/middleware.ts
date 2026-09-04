@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 const isDashboardRoute = createRouteMatcher(["/dashboard/(.*)"]);
 const isAdminRoute = createRouteMatcher(["/dashboard/admin/(.*)"]);
 const isOwnerRoute = createRouteMatcher(["/dashboard/owner/(.*)"]);
-const isApiWebhook = createRouteMatcher(["/api/webhooks/(.*)"]);
+const isApiRoute = createRouteMatcher(["/api/(.*)"]); // webhooks entrantes y API v1: sin sesión de Clerk
 
 export default clerkMiddleware(async (auth, req) => {
-  if (isApiWebhook(req)) return;
+  if (isApiRoute(req)) return;
 
   if (isDashboardRoute(req)) {
     const { userId, sessionClaims } = await auth();

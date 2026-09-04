@@ -115,6 +115,43 @@ if (expected !== $input.item.json.headers['x-foodzinder-signature']) throw new E
 return $input.item;
 ```
 
+## Cabeceras y límites
+
+Todas las respuestas llevan `Cache-Control: no-store` y las cabeceras `X-RateLimit-Limit`, `X-RateLimit-Remaining` y `X-RateLimit-Reset` (segundos). Al superar el límite se responde `429` con `Retry-After` y `code: "RATE_LIMITED"`. El límite es por IP y ventana deslizante de un minuto, en memoria (ADR-0003).
+
+`GET /api/v1` devuelve un índice con los endpoints, la ruta a este documento y la lista de eventos.
+
+## Ejemplos con curl
+
+```bash
+BASE=https://<tu-dominio>/api/v1
+KEY=<FOODZINDER_API_KEY>
+
+# Público
+curl "$BASE/restaurants?query=paella&city=Valencia"
+curl "$BASE/restaurants?lat=40.4169&lng=-3.7035&radius=3&sort=distance"
+curl "$BASE/restaurants/casa-terral"
+curl "$BASE/restaurants/casa-terral/reviews?limit=5"
+curl "$BASE/taxonomies?scope=MENU_ALLERGEN"
+curl "$BASE/plans"
+
+# Privado (n8n)
+curl -H "X-Api-Key: $KEY" "$BASE/admin/restaurants?status=PENDING"
+curl -H "X-Api-Key: $KEY" -X POST "$BASE/admin/restaurants/<id>/approve"
+curl -H "X-Api-Key: $KEY" -X POST -H "content-type: application/json" -d '{"reason":"La dirección no coincide con las fotos"}' "$BASE/admin/restaurants/<id>/reject"
+curl -H "X-Api-Key: $KEY" "$BASE/admin/reviews?since=2026-09-01T00:00:00Z"
+curl -H "X-Api-Key: $KEY" "$BASE/admin/stats?period=7d"
+curl -H "X-Api-Key: $KEY" "$BASE/admin/webhook-deliveries?status=FAILED"
+curl -H "X-Api-Key: $KEY" -X POST "$BASE/admin/webhook-deliveries/<id>/retry"
+curl -H "X-Api-Key: $KEY" -X POST -H "content-type: application/json" -d '{"message":"prueba"}' "$BASE/admin/webhooks/test"
+```
+
+Las operaciones administrativas hechas con clave de API se atribuyen al primer administrador de la base de datos, para que las transiciones queden firmadas por una persona real.
+
+## Tests de contrato
+
+`src/test/api-contract.test.ts` ejecuta cada endpoint contra la base de datos del `.env` con los datos del seed: envoltura, códigos de estado, cabeceras de límite, 401 sin clave, 400 de validación, 404, 409 en transiciones inválidas y el flujo rechazar y aprobar sobre un restaurante de prueba que se crea y se borra en el propio test.
+
 ## Casos de uso previstos para el P5
 
 1. `restaurant.created` → n8n avisa al admin por correo o Telegram con un botón de aprobar que llama a `POST /admin/restaurants/{id}/approve`.
