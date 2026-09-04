@@ -2,62 +2,59 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, rolando]
   pull_request:
-    branches: [main]
+    branches: [main, rolando]
 
+# Lint, tipos, tests (unitarios y de contrato contra un Postgres efímero con el
+# seed) y build de producción. El despliegue lo hace Vercel desde su integración
+# con GitHub (ADR-0005), no este workflow.
 jobs:
-  lint-typecheck:
+  verify:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
-      - run: bun run lint
-      - run: bun run type-check
-
-  test:
-    runs-on: ubuntu-latest
-    needs: lint-typecheck
+    timeout-minutes: 15
     services:
       postgres:
         image: postgres:17-alpine
         env:
-          POSTGRES_USER: test
-          POSTGRES_PASSWORD: test
-          POSTGRES_DB: foodzinder_test
+          POSTGRES_USER: foodzinder
+          POSTGRES_PASSWORD: foodzinder
+          POSTGRES_DB: foodzinder_ci
         ports: ["5432:5432"]
         options: >-
           --health-cmd pg_isready
-          --health-interval 10s
+          --health-interval 5s
           --health-timeout 5s
-          --health-retries 5
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://foodzinder:foodzinder@localhost:5432/foodzinder_ci
+      DIRECT_URL: postgresql://foodzinder:foodzinder@localhost:5432/foodzinder_ci
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
+      FOODZINDER_API_KEY: ci-api-key
+      WEBHOOK_SECRET: ci-webhook-secret
+      # Claves de desarrollo de Clerk: necesarias para el build (ClerkProvider). Añadir en Settings → Secrets.
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+      CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
-      - run: bun run db:generate
-      - run: DATABASE_URL=postgresql://test:test@localhost:5432/foodzinder_test bun run db:migrate:deploy
-      - run: DATABASE_URL=postgresql://test:test@localhost:5432/foodzinder_test bun test
-
-  build:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
-      - run: bun run build
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    steps:
-      - uses: actions/checkout@v4
-      - name: Deploy to Easypanel
+        with:
+          bun-version: latest
+      - name: Instalar dependencias
+        run: bun install --frozen-lockfile
+      - name: Lint
+        run: bun run lint
+      - name: Tipos
+        run: bun run type-check
+      - name: Migraciones y seed
         run: |
-          curl -X POST "${{ secrets.EASYPANEL_WEBHOOK_URL }}" \
-            -H "Authorization: Bearer ${{ secrets.EASYPANEL_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d '{"forcePull": true}'
+          bun run db:migrate:deploy
+          bun run db:seed
+      - name: Tests (unitarios y de contrato)
+        run: bun run test
+      - name: Build de producción
+        if: env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY != ''
+        run: bun run build
+      - name: Aviso si falta la clave de Clerk
+        if: env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY == ''
+        run: echo "::warning::Sin NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY en los secrets del repo; se omite el build."

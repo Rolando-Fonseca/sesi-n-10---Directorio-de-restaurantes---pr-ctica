@@ -55,10 +55,14 @@ openssl rand -hex 32
 ## 4. Vercel (despliegue)
 
 1. Entrar en https://vercel.com y crear cuenta con GitHub.
-2. **Add New → Project**, importar `Rolando-Fonseca/sesi-n-10---Directorio-de-restaurantes---pr-ctica`. Rama de producción: la que se indique en el README en el momento del despliegue.
-3. Framework: Next.js (lo detecta solo). Build command: dejar el de `package.json` (`vercel-build`, que ejecuta las migraciones antes del build).
-4. **Environment Variables**: pegar las mismas del `.env` cambiando `NEXT_PUBLIC_APP_URL` por la URL que asigne Vercel (por ejemplo `https://foodzinder.vercel.app`).
+2. **Add New → Project**, importar `Rolando-Fonseca/sesi-n-10---Directorio-de-restaurantes---pr-ctica`. En **Settings → Git**, poner `rolando` como **Production Branch** (el repo tiene `main` con el historial del equipo; el proyecto vive en `rolando`).
+3. Framework: Next.js (lo detecta solo). `vercel.json` ya fija la región de Londres (junto a Neon), `bun install` y el comando `vercel-build`, que ejecuta las migraciones antes del build. No hace falta tocar nada.
+4. **Environment Variables**: pegar las mismas del `.env` cambiando `NEXT_PUBLIC_APP_URL` por la URL que asigne Vercel (por ejemplo `https://foodzinder.vercel.app`). Imprescindibles: `DATABASE_URL`, `DIRECT_URL`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`, `NEXT_PUBLIC_CLERK_SIGN_IN_URL`, `NEXT_PUBLIC_CLERK_SIGN_UP_URL`, `FOODZINDER_API_KEY`, `WEBHOOK_SECRET`. `WEBHOOK_URLS` se rellena en el P5 (o con un `webhook.site` para la demo).
 5. Deploy. Copiar la URL final.
+
+### CI en GitHub Actions
+
+El workflow `.github/workflows/ci.yml` corre lint, tipos, migraciones y seed sobre un PostgreSQL efímero, los 68 tests y el build. Para que el build funcione en CI hay que añadir dos secrets en **GitHub → Settings → Secrets and variables → Actions**: `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` y `CLERK_SECRET_KEY` (las mismas claves de desarrollo). Sin ellos, el workflow lo avisa y omite solo el paso de build.
 
 ## 5. Webhook de Clerk (después del primer despliegue)
 
