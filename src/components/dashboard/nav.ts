@@ -1,45 +1,48 @@
 import type { UserRole } from "@prisma/client";
-import { Bell, ChefHat, ClipboardCheck, CreditCard, FileText, Heart, LayoutDashboard, MessageSquare, Receipt, Shapes, Store, User, Users, Webhook } from "lucide-react";
 import type { NavGroup } from "./shell";
+
+// Los iconos se indican por nombre: este módulo lo lee un Server Component y
+// una función (el componente del icono) no puede cruzar al Client Component.
+// El mapa nombre → icono vive en shell.tsx.
 
 const ACCOUNT: NavGroup = {
   title: "Cuenta",
   items: [
-    { href: "/dashboard/profile", label: "Perfil y alérgenos", icon: User },
-    { href: "/dashboard/notifications", label: "Notificaciones", icon: Bell },
+    { href: "/dashboard/profile", label: "Perfil y alérgenos", icon: "user" },
+    { href: "/dashboard/notifications", label: "Notificaciones", icon: "bell" },
   ],
 };
 
 const USER: NavGroup = {
   title: "Mi Foodzinder",
   items: [
-    { href: "/dashboard/user", label: "Resumen", icon: LayoutDashboard, exact: true },
-    { href: "/dashboard/user/wishlist", label: "Platos guardados", icon: Heart },
-    { href: "/dashboard/user/reviews", label: "Mis reseñas", icon: MessageSquare },
+    { href: "/dashboard/user", label: "Resumen", icon: "dashboard", exact: true },
+    { href: "/dashboard/user/wishlist", label: "Platos guardados", icon: "heart" },
+    { href: "/dashboard/user/reviews", label: "Mis reseñas", icon: "message" },
   ],
 };
 
 const OWNER: NavGroup = {
   title: "Mi negocio",
   items: [
-    { href: "/dashboard/owner", label: "Resumen", icon: LayoutDashboard, exact: true },
-    { href: "/dashboard/owner/restaurants", label: "Restaurantes", icon: Store },
-    { href: "/dashboard/owner/menus", label: "Cartas y platos", icon: ChefHat },
-    { href: "/dashboard/owner/reviews", label: "Reseñas recibidas", icon: MessageSquare },
-    { href: "/dashboard/owner/subscription", label: "Plan y facturación", icon: CreditCard },
-    { href: "/dashboard/owner/invoices", label: "Facturas", icon: Receipt },
+    { href: "/dashboard/owner", label: "Resumen", icon: "dashboard", exact: true },
+    { href: "/dashboard/owner/restaurants", label: "Restaurantes", icon: "store" },
+    { href: "/dashboard/owner/menus", label: "Cartas y platos", icon: "chef" },
+    { href: "/dashboard/owner/reviews", label: "Reseñas recibidas", icon: "message" },
+    { href: "/dashboard/owner/subscription", label: "Plan y facturación", icon: "card" },
+    { href: "/dashboard/owner/invoices", label: "Facturas", icon: "receipt" },
   ],
 };
 
 const ADMIN: NavGroup = {
   title: "Administración",
   items: [
-    { href: "/dashboard/admin", label: "Resumen", icon: LayoutDashboard, exact: true },
-    { href: "/dashboard/admin/restaurants", label: "Restaurantes", icon: ClipboardCheck },
-    { href: "/dashboard/admin/users", label: "Usuarios y roles", icon: Users },
-    { href: "/dashboard/admin/taxonomies", label: "Taxonomías", icon: Shapes },
-    { href: "/dashboard/admin/reviews", label: "Reseñas", icon: FileText },
-    { href: "/dashboard/admin/webhooks", label: "Webhooks y eventos", icon: Webhook },
+    { href: "/dashboard/admin", label: "Resumen", icon: "dashboard", exact: true },
+    { href: "/dashboard/admin/restaurants", label: "Restaurantes", icon: "clipboard" },
+    { href: "/dashboard/admin/users", label: "Usuarios y roles", icon: "users" },
+    { href: "/dashboard/admin/taxonomies", label: "Taxonomías", icon: "shapes" },
+    { href: "/dashboard/admin/reviews", label: "Reseñas", icon: "file" },
+    { href: "/dashboard/admin/webhooks", label: "Webhooks y eventos", icon: "webhook" },
   ],
 };
 

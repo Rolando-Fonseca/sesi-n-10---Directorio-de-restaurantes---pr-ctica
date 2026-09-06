@@ -5,12 +5,31 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { UserButton } from "@clerk/nextjs";
-import { Bell, Menu, type LucideIcon } from "lucide-react";
+import { Bell, ChefHat, ClipboardCheck, CreditCard, FileText, Heart, LayoutDashboard, Menu, MessageSquare, Receipt, Shapes, Store, User, Users, Webhook, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
-export type NavItem = { href: string; label: string; icon: LucideIcon; exact?: boolean };
+/** Iconos por nombre: nav.ts (servidor) no puede pasar componentes a este Client Component. */
+const ICONS = {
+  bell: Bell,
+  chef: ChefHat,
+  clipboard: ClipboardCheck,
+  card: CreditCard,
+  file: FileText,
+  heart: Heart,
+  dashboard: LayoutDashboard,
+  message: MessageSquare,
+  receipt: Receipt,
+  shapes: Shapes,
+  store: Store,
+  user: User,
+  users: Users,
+  webhook: Webhook,
+} satisfies Record<string, LucideIcon>;
+
+export type NavIcon = keyof typeof ICONS;
+export type NavItem = { href: string; label: string; icon: NavIcon; exact?: boolean };
 export type NavGroup = { title: string; items: NavItem[] };
 
 type Props = { groups: NavGroup[]; roleLabel: string; unread: number; children: ReactNode };
@@ -25,7 +44,7 @@ function NavList({ groups, onNavigate }: { groups: NavGroup[]; onNavigate?: () =
           <p className="px-3 text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">{g.title}</p>
           <ul className="mt-1.5 space-y-0.5">
             {g.items.map((item) => {
-              const Icon = item.icon;
+              const Icon = ICONS[item.icon];
               const isActive = active(item);
               return (
                 <li key={item.href}>
