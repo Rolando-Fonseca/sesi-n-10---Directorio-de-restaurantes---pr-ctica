@@ -12,5 +12,5 @@ export const POST = handle(async (req) => {
   const { message } = body.parse(await readJson(req));
   const actor = await apiActor();
   const envelope = await emitEvent("webhook.test", { message, sentBy: `api-key (${actor.email})` });
-  return ok({ deliveryId: envelope?.id ?? null, targets: env.webhookUrls() }, undefined, { headers });
+  return ok({ eventId: envelope?.id ?? null, deliveryIds: envelope?.deliveryIds ?? [], targets: env.webhookUrls() }, undefined, { headers });
 });

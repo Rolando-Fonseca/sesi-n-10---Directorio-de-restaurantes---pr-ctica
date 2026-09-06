@@ -2,10 +2,15 @@ import { prisma } from "@/lib/db";
 import { env } from "@/lib/env";
 import { DELIVERY_HEADER, EVENT_HEADER, SIGNATURE_HEADER, signPayload } from "./signature";
 
-/** Esperas entre intentos en ms: 2 s, 8 s, 30 s (docs/api.md). */
-export const RETRY_DELAYS_MS = [2_000, 8_000, 30_000] as const;
+/**
+ * Esperas entre intentos en ms: 2 s, 6 s, 30 s, con 7 s de timeout por intento
+ * (docs/api.md). El tercer intento llega pasados unos 50 s, lo que tarda en
+ * despertar un receptor alojado en un plan gratuito (Render). El total cabe en
+ * los 60 s de ejecución de una función de Vercel.
+ */
+export const RETRY_DELAYS_MS = [2_000, 6_000, 30_000] as const;
 export const MAX_ATTEMPTS = RETRY_DELAYS_MS.length;
-const TIMEOUT_MS = 5_000;
+const TIMEOUT_MS = 7_000;
 
 type DeliveryRow = { id: string; event: string; url: string; payload: unknown; attempts: number };
 

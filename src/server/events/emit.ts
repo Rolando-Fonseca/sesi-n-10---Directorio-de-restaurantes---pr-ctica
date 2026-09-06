@@ -3,7 +3,7 @@ import type { NotificationType } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { env } from "@/lib/env";
 import { deliverWithRetries } from "./deliver";
-import { EVENT_VERSION, type DomainEventEnvelope, type DomainEventMap, type DomainEventName } from "./types";
+import { EVENT_VERSION, type DomainEventEnvelope, type DomainEventMap, type DomainEventName, type EmittedEvent } from "./types";
 
 type NotificationSpec = { userId: string | null; type: NotificationType; title: string; message: string; referenceId?: string };
 
@@ -27,9 +27,10 @@ export async function emitEvent<E extends DomainEventName>(
   event: E,
   data: DomainEventMap[E],
   notifications: NotificationSpec[] = [],
-): Promise<DomainEventEnvelope<E> | null> {
+): Promise<EmittedEvent<E> | null> {
   try {
     const envelope = buildEnvelope(event, data);
+    const deliveryIds: string[] = [];
 
     if (notifications.length) {
       await prisma.notification.createMany({
@@ -41,10 +42,11 @@ export async function emitEvent<E extends DomainEventName>(
     if (urls.length) {
       const rows = urls.map((url) => ({ id: randomUUID(), event, url, payload: envelope as object }));
       await prisma.webhookDelivery.createMany({ data: rows });
+      deliveryIds.push(...rows.map((r) => r.id));
       schedule(() => Promise.all(rows.map((r) => deliverWithRetries(r.id))).then(() => undefined));
     }
 
-    return envelope;
+    return { ...envelope, deliveryIds };
   } catch (e) {
     console.error(`[events] no se pudo emitir ${event}:`, e);
     return null;

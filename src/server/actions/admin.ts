@@ -87,7 +87,7 @@ export async function sendTestWebhookAction(input: unknown) {
     revalidate: ["/dashboard/admin/webhooks"],
     handler: async ({ message }, { user }) => {
       const envelope = await emitEvent("webhook.test", { message, sentBy: user.email });
-      return { deliveryId: envelope?.id ?? null };
+      return { eventId: envelope?.id ?? null, deliveryIds: envelope?.deliveryIds ?? [] };
     },
   });
 }

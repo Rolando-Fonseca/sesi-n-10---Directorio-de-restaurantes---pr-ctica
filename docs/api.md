@@ -103,7 +103,7 @@ Cuerpo:
 | `review.created` | Un usuario publica una reseña | `{ id, restaurant: { id, slug, name, ownerEmail }, author: { id, name }, ratings, comment, average }` |
 | `subscription.activated` | Un owner activa un plan (simulado) | `{ id, userId, plan, interval, amount, currentPeriodEnd }` |
 
-Reintentos: 3 intentos con esperas de 2, 8 y 30 segundos. Timeout 5 segundos por intento. Se considera entregado con cualquier respuesta 2xx.
+Reintentos: 3 intentos con esperas de 2, 6 y 30 segundos y 7 segundos de timeout por intento, de modo que el tercero llega pasados unos 50 segundos (lo que tarda en despertar un receptor en un plan gratuito). Se considera entregado con cualquier respuesta 2xx. `POST /admin/webhooks/test` devuelve `eventId` y `deliveryIds` (uno por URL); el reintento manual usa el id de entrega.
 
 Verificación en n8n (nodo Code, antes de procesar):
 

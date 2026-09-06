@@ -54,3 +54,6 @@ export type DomainEventEnvelope<E extends DomainEventName = DomainEventName> = {
   occurredAt: string;
   data: DomainEventMap[E];
 };
+
+/** Lo que devuelve emitEvent: el sobre más los ids de las entregas creadas (uno por URL). */
+export type EmittedEvent<E extends DomainEventName = DomainEventName> = DomainEventEnvelope<E> & { deliveryIds: string[] };
