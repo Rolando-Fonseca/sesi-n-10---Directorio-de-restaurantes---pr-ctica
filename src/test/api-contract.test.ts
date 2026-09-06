@@ -65,7 +65,16 @@ describe.skipIf(!hasDb)("API v1 pública", () => {
 
   it("GET /restaurants/{slug} da 404 para pendientes e inexistentes", async () => {
     const { GET } = await import("@/app/api/v1/restaurants/[slug]/route");
-    expect((await GET(get("/restaurants/gracia-verde"), params({ slug: "gracia-verde" }))).status).toBe(404);
+    // Un pendiente propio: los de demo cambian de estado (Gràcia Verde se aprobó desde Telegram en el P5)
+    const { prisma } = await import("@/lib/db");
+    const owner = await prisma.user.findFirstOrThrow({ where: { role: "OWNER" } });
+    const slug = `test-pendiente-${Date.now()}`;
+    const pending = await prisma.restaurant.create({ data: { ownerId: owner.id, name: "Pendiente de prueba", slug, address: "Calle Falsa 1", latitude: 40, longitude: -3, status: "PENDING" } });
+    try {
+      expect((await GET(get(`/restaurants/${slug}`), params({ slug }))).status).toBe(404);
+    } finally {
+      await prisma.restaurant.delete({ where: { id: pending.id } });
+    }
     const res = await GET(get("/restaurants/no-existe"), params({ slug: "no-existe" }));
     expect(res.status).toBe(404);
     expect(await res.json()).toMatchObject({ success: false, code: "NOT_FOUND" });
