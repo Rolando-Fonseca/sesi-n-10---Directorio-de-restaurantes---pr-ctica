@@ -195,6 +195,22 @@ describe.skipIf(!hasDb)("API v1 privada", () => {
     expect(json.data[0]).toMatchObject({ restaurant: { slug: expect.any(String) }, author: { name: expect.any(String) } });
   });
 
+  it("POST /admin/email exige clave y valida el cuerpo; sin SMTP configurado responde 403 con motivo", async () => {
+    const { POST } = await import("@/app/api/v1/admin/email/route");
+    expect((await POST(post("/admin/email", { to: "a@b.co", subject: "s", html: "<p>h</p>" }), {})).status).toBe(401);
+    const bad = await POST(post("/admin/email", { to: "no-es-correo", subject: "s", html: "<p>h</p>" }, auth), {});
+    expect(bad.status).toBe(400);
+    const saved = { SMTP_HOST: process.env.SMTP_HOST, SMTP_USER: process.env.SMTP_USER, SMTP_PASSWORD: process.env.SMTP_PASSWORD };
+    delete process.env.SMTP_HOST;
+    try {
+      const res = await POST(post("/admin/email", { to: "a@b.co", subject: "s", html: "<p>h</p>" }, auth), {});
+      expect(res.status).toBe(403);
+      expect((await res.json()).error).toContain("SMTP_HOST");
+    } finally {
+      Object.assign(process.env, Object.fromEntries(Object.entries(saved).filter(([, v]) => v !== undefined)));
+    }
+  });
+
   it("GET /admin/webhook-deliveries responde con paginación aunque esté vacío", async () => {
     const { GET } = await import("@/app/api/v1/admin/webhook-deliveries/route");
     const json = await (await GET(get("/admin/webhook-deliveries?status=FAILED", auth), {})).json();

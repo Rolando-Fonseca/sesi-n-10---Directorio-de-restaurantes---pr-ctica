@@ -65,6 +65,7 @@ Pensados para n8n. La clave es `FOODZINDER_API_KEY` y equivale al rol `ADMIN`. L
 | `GET /admin/stats?period=7d` | | Contadores: altas de usuarios y owners, restaurantes por estado, reseñas, media global |
 | `GET /admin/webhook-deliveries?status=FAILED` | | Entregas de webhook y su resultado |
 | `POST /admin/webhook-deliveries/{id}/retry` | | Reintenta una entrega |
+| `POST /admin/email` | `{ "to", "subject", "html", "text"? }` | Relevo de correo transaccional por SMTP (variables `SMTP_*`). Existe porque el plan gratuito de Render, donde corre n8n, bloquea el SMTP saliente; n8n compone el correo y Foodzinder lo envía. Sin SMTP configurado responde 403 |
 
 ## Webhooks salientes
 
