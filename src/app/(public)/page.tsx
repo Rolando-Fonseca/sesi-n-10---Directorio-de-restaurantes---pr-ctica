@@ -181,7 +181,7 @@ export default async function HomePage() {
           </Reveal>
           <Reveal delay={120} className="flex flex-col gap-3 sm:flex-row lg:flex-col">
             <Button asChild size="lg" className="h-12 bg-brand px-6 text-base text-foreground hover:bg-brand/90">
-              <Link href="/sign-up?role=owner">Publicar mi restaurante</Link>
+              <Link href="/dashboard/owner/restaurants/new">Publicar mi restaurante</Link>
             </Button>
             <Button
               asChild

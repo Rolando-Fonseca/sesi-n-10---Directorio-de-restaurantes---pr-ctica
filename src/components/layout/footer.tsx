@@ -16,7 +16,7 @@ const COLUMNS = [
     title: "Restaurantes",
     links: [
       { href: "/pricing", label: "Planes y precios" },
-      { href: "/sign-up?role=owner", label: "Publicar mi restaurante" },
+      { href: "/dashboard/owner/restaurants/new", label: "Publicar mi restaurante" },
       { href: "/dashboard/owner", label: "Panel de dueño" },
     ],
   },

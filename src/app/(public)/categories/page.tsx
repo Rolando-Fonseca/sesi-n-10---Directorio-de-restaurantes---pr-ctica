@@ -66,7 +66,7 @@ export default async function CategoriesPage() {
           </ul>
           <p className="mt-4 text-sm text-muted-foreground">
             ¿Tienes un restaurante de alguna de estas cocinas?{" "}
-            <Link href="/sign-up?role=owner" className="font-medium text-primary hover:underline">
+            <Link href="/dashboard/owner/restaurants/new" className="font-medium text-primary hover:underline">
               Publícalo gratis.
             </Link>
           </p>
